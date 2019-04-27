@@ -1,32 +1,32 @@
-<%= form_with(model: order, local: true) do |form| %>
-  <% if order.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
+<%= content_tag :div,
+  id: "order-form",
+  data: {
+    order: order.to_json(except: [:created_at, :updated_at]),
+    positions_attributes: order.positions.to_json(except: [:order_id, :created_at, :updated_at])
+  } do %>
 
-      <ul>
-      <% order.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+  <label>Order Title</label>
+  <input type="text" v-model="order.title" />
+
+  <h4>Positions</h4>
+  <div v-for="(position, index) in order.positions_attributes">
+    <div v-if="position._destroy == '1'">
+      You marked {{ position.title }} to be removed.
+    </div>    
+    <div v-else>
+      <label>Position Title</label>
+      <input type="text" v-model="position.title" />
+
+      <label>Speciality Area</label>
+      <input type="text" v-model="position.speciality_area" />
+
+      <button v-on:click="removePosition(index)">Remove</button>
     </div>
+    
+    
+  </div>
+
+  <button v-on:click='addPosition'>Add Position</button>
+  <br />
+  <button v-on:click='saveOrder'>Save Order</button>
   <% end %>
-
-  <div class="field">
-    <%= form.label :title %>
-    <%= form.text_field :title %>
-  </div>
-
-  <div class="field">
-    <%= form.label :briefing %>
-    <%= form.text_area :briefing %>
-  </div>
-
-  <div class="field">
-    <%= form.label :customer %>
-    <%= form.text_field :customer %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>

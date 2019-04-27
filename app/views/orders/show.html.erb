@@ -15,5 +15,14 @@
   <%= @order.customer %>
 </p>
 
+<h4>Positions</h4>
+
+<% @order.positions.each do |position| %>
+  <div>
+    <%= position.title %>
+    <%= position.speciality_area %>
+  </div>
+<% end %>
+
 <%= link_to 'Edit', edit_order_path(@order) %> |
 <%= link_to 'Back', orders_path %>
