@@ -1,32 +1,68 @@
 <%= content_tag :div,
-  id: "order-form",
-  data: {
-    order: order.to_json(except: [:created_at, :updated_at]),
-    positions_attributes: order.positions.to_json(except: [:order_id, :created_at, :updated_at])
-  } do %>
+id: "order-form",
+data: {
+  order: order.to_json(except: [:created_at, :updated_at]),
+  positions_attributes: order.positions.to_json(except: [:order_id, :created_at, :updated_at])
+} do %>
 
-  <label>Order Title</label>
-  <input type="text" v-model="order.title" />
+<div class="row">
+  <div class="col header">
+    <button v-on:click='saveOrder' class="btn btn-dark">Save Order</button>
+  </div>
+</div>
 
-  <h4>Positions</h4>
-  <div v-for="(position, index) in order.positions_attributes">
-    <div v-if="position._destroy == '1'">
-      You marked {{ position.title }} to be removed.
-    </div>    
-    <div v-else>
-      <label>Position Title</label>
-      <input type="text" v-model="position.title" />
+<div class="row">
+  <div class="col">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="details-tab" data-toggle="tab" href="#details" role="tab" aria-controls="details" aria-selected="true">Order Details</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="positions-tab" data-toggle="tab" href="#positions" role="tab" aria-controls="positions" aria-selected="false">Positions</a>
+      </li>
+    </ul>
+  </div>
+</div>
 
-      <label>Speciality Area</label>
-      <input type="text" v-model="position.speciality_area" />
-
-      <button v-on:click="removePosition(index)">Remove</button>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active container" id="details" role="tabpanel" aria-labelledby="home-tab">
+    <div class="row">
+      <div class="col-3">
+        <label>Customer</label>
+        <input type="text" v-model="order.customer" />    
+      </div>
+      <div class="col-9">
+        <p>
+          <label>Order Title</label>
+          <input type="text" v-model="order.title" /> 
+        </p>
+        <p>
+          <label>Briefing</label>
+          <input type="text" v-model="order.briefing" /> 
+        </p>
+      </div>
     </div>
-    
     
   </div>
 
-  <button v-on:click='addPosition'>Add Position</button>
-  <br />
-  <button v-on:click='saveOrder'>Save Order</button>
-  <% end %>
+  <div class="tab-pane fade container" id="positions" role="tabpanel" aria-labelledby="profile-tab">
+    <div v-for="(position, index) in order.positions_attributes">
+      <div v-if="position._destroy == '1'">
+        You marked {{ position.title }} to be removed.
+      </div>    
+      <div v-else>
+        <label>Position Title</label>
+        <input type="text" v-model="position.title" />
+
+        <label>Speciality Area</label>
+        <input type="text" v-model="position.speciality_area" />
+
+        <button v-on:click="removePosition(index)" class="btn btn-dark btn-sm">Remove</button>
+      </div>
+    </div>
+    <button v-on:click='addPosition' class="btn btn-dark">Add Position</button>
+  </div>
+</div>
+<% end %>
+
+

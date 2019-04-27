@@ -1,5 +1,8 @@
-<h1>New Order</h1>
+<div class="row header">
+  <div class="col">
+    <h1>Create Order</h1>
+    <%= link_to 'Back', orders_path %>
+  </div>
+</div>
 
 <%= render 'form', order: @order %>
-
-<%= link_to 'Back', orders_path %>

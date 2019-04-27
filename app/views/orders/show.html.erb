@@ -1,28 +1,67 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Title:</strong>
-  <%= @order.title %>
-</p>
-
-<p>
-  <strong>Briefing:</strong>
-  <%= @order.briefing %>
-</p>
-
-<p>
-  <strong>Customer:</strong>
-  <%= @order.customer %>
-</p>
-
-<h4>Positions</h4>
-
-<% @order.positions.each do |position| %>
-  <div>
-    <%= position.title %>
-    <%= position.speciality_area %>
+<div class="row header">
+  <div class="col">
+    <h1><%= @order.title %></h1>
+    <%= link_to 'Back', orders_path %> | 
+    <%= link_to 'Edit', edit_order_path(@order) %>
   </div>
-<% end %>
+</div>
 
-<%= link_to 'Edit', edit_order_path(@order) %> |
-<%= link_to 'Back', orders_path %>
+<div class="row">
+  <div class="col">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="details-tab" data-toggle="tab" href="#details" role="tab" aria-controls="details" aria-selected="true">Order Details</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="positions-tab" data-toggle="tab" href="#positions" role="tab" aria-controls="positions" aria-selected="false">Positions</a>
+      </li>
+    </ul>
+  </div>  
+</div>
+
+
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active container" id="details" role="tabpanel" aria-labelledby="home-tab">
+
+    <div class="row">
+      <div class="col-3">
+        <p>
+          <strong>Customer:</strong>
+          <%= @order.customer %>
+        </p>
+      </div>
+      <div class="col-9">
+        <p>
+          <strong>Title:</strong>
+          <%= @order.title %>
+        </p>
+        <p>
+          <strong>Briefing:</strong>
+          <%= @order.briefing %>
+        </p>
+      </div>
+    </div>
+
+  </div>
+  <div class="tab-pane fade container" id="positions" role="tabpanel" aria-labelledby="profile-tab">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Title</th>
+          <th scope="col">Speciality Area</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @order.positions.each do |position| %>
+          <tr>
+            <th scope="row"><%= position.id %></th>
+            <td><%= position.title %></td>
+            <td><%= position.speciality_area %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+

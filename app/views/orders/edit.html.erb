@@ -1,6 +1,9 @@
-<h1>Editing Order</h1>
+<div class="row header">
+  <div class="col">
+    <h1>Edit Order</h1>
+    <%= link_to 'Back', orders_path %> | 
+    <%= link_to 'Show', @order %>
+  </div>
+</div>
 
 <%= render 'form', order: @order %>
-
-<%= link_to 'Show', @order %> |
-<%= link_to 'Back', orders_path %>
